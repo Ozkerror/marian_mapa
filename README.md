@@ -7,7 +7,7 @@
 ### Obsługa LiDARa za pomocą ROS2 i gotowej paczki
 1. Znajdz port do którego podłączony jest LiDAR, w tym celu  
 ls /dev/tty*  
-sudo dmesg | grep tty
+sudo dmesg | grep tty  
 w bashu powinien wyswietlic sie port do którego podłączony jest LiDAR
 2. Wklej poniższą linijkę z nazwą portu do którego jest podłączony LiDAR  
 yq -i '.urg_node.ros__parameters.serial_port = "/dev/ttyACM[tutaj]"' config.yaml
