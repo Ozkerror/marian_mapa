@@ -12,7 +12,7 @@ w bashu powinien wyswietlic sie port do którego podłączony jest LiDAR
 2. Wklej poniższą linijkę z nazwą portu do którego jest podłączony LiDAR  
 yq -i '.urg_node.ros__parameters.serial_port = "/dev/ttyACM[tutaj]"' config.yaml
 3. odpalanie gałęzi dla lidara  
-ros2 run urg_node urg_node --ros-args --params-file config.yaml
+ros2 run urg_node urg_node_driver --ros-args --params-file config.yaml
 4. Sprawdzenie czy wszystko dziala  
 ros2 topic echo /scan
 ### Wyświetlenie efektów w Rviz2
