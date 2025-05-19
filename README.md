@@ -1,5 +1,11 @@
 # marian_mapa
 
+## Do zrobienia
+1. dokonczyc program w arduino
+2. przekazać dane z arduino na odpowiedni topic (jakies odom czy cos w tym stylu)
+3. złożyć wszystko do kupy i stworzyć mape
+4. stworzyć skrypt w bashu do odpalania całości
+
 ## LiDAR
 
 ### Podłączenie
