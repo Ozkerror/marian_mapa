@@ -1,0 +1,3 @@
+promien koła = 45mm
+odległość między kołami = 370mm
+liczba impulsów = 36000
