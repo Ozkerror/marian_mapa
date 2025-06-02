@@ -1,5 +1,8 @@
 # marian_mapa
 
+## Przydatny chat  
+https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a  
+  
 ## Do zrobienia
 1. Ogarnąć podstawy microRosa
 
