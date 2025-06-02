@@ -2,7 +2,7 @@
 
 ## Do zrobienia
 1. Ogarnąć podstawy microRosa  
-https://micro.ros.org/blog/2020/08/27/esp32/
+https://micro.ros.org/blog/2020/08/27/esp32/  
 https://micro.ros.org/docs/tutorials/core/first_application_linux/  
 https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/  
 https://www.youtube.com/watch?v=fo5I9ZYbG5Q&list=PL1YH3iMfizDJge1nDCuEMvCvhBkKinIJ-  
