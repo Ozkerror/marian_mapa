@@ -1,7 +1,13 @@
 # marian_mapa
 
 ## Do zrobienia
-1. Ogarnąć podstawy microRosa  
+1. Ogarnąć podstawy microRosa
+
+LINK BOZY
+https://cps.unileoben.ac.at/install-micro-ros-on-esp32/  https://cps.unileoben.ac.at/install-micro-ros-on-esp32/
+
+
+
 https://micro.ros.org/blog/2020/08/27/esp32/  
 https://micro.ros.org/docs/tutorials/core/first_application_linux/  
 https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/  
