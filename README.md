@@ -2,6 +2,51 @@
 
 ## Przydatny chat  
 https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a  
+
+## Micro_ROS  
+1. Docker - uruchomienie kontenera
+   ```bash
+  docker run -it --net=host -v /dev:/dev --privileged ros:humble
+   ```
+2. Konfiguracja srodowiska
+  ```bash
+  source /opt/ros/$ROS_DISTRO/setup.bash
+  ```
+3. Tworzenie Workspace'u i pobieranie narzedzi microRosa
+   ```bash
+  mkdir microros_ws
+  cd microros_ws
+  git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
+  ```
+4. instalacja zaleznosci
+  ```bash
+  sudo apt update && rosdep update
+  rosdep install --from-paths src --ignore-src -y
+  ```
+5. instalacja pipa
+   ```bash
+   sudo apt-get install python3-pip
+   ```
+6. buildowanie narzedzi microRosa
+   ```bash
+   colcon build
+   source install/local_setup.bash
+   ```
+7. instalacja agenta microRosa
+   ```bash
+   ros2 run micro_ros_setup create_agent_ws.sh
+   ```
+8. Buildowanie agenta
+   ```bash
+   ros2 run micro_ros_setup build_agent.sh
+   source install/local_setup.bash
+   ```
+9. Wlaczenie agenta
+    ```bash
+    ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+    ```
+    
+
   
 ## Do zrobienia
 1. Ogarnąć podstawy microRosa
