@@ -62,6 +62,15 @@ https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a
     ```bash
     ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
     ```
+11. W nowym terminalu przelacz sie na roota
+    ```bash
+    sudo su
+    ```
+12. Konfiguracja srodowiska
+    ```bash
+    source /opt/ros/<twoja_dystrybucja_ros2>/setup.bash
+    ```
+    
     
 
   
