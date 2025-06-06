@@ -1,22 +1,7 @@
 # marian_mapa
-uzytkownicy musza byc tacy sami, nie moze w jednym byc root a w drugim r4h  
+Uzytkownicy zarowno w Dockerze jak i poza nim musza byc tacy sami aby mozliwa byla komunikacja.  
+W przyszlosci jesli uda sie stworzyc wlasnego Dockera to warto zainteresowac sie docker compose.  
 
-
-docker compose   
-
-  (base) r4h@r4h-Lenovo-Legion-5-15ARH05H:~$ sudo su  
-[sudo] hasło użytkownika r4h:  
-root@r4h-Lenovo-Legion-5-15ARH05H:/home/r4h# ros2 topic list  
-ros2: nie znaleziono polecenia  
-root@r4h-Lenovo-Legion-5-15ARH05H:/home/r4h# source ~/.bash  
-.bash_history  .bashrc          
-root@r4h-Lenovo-Legion-5-15ARH05H:/home/r4h# source .bashrc  
-(base) root@r4h-Lenovo-Legion-5-15ARH05H:/home/r4h# ros2 topic list  
-/chatter  
-/micro_ros_arduino_node_publisher  
-/parameter_events  
-/rosout  
-(base) root@r4h-Lenovo-Legion-5-15ARH05H:/home/r4h# ros2 topic echo /micro_ros_arduino_node_publisher  
 ## Przydatny chat  
 https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a  
 
