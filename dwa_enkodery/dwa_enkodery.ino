@@ -35,8 +35,8 @@ void loop(){
     Serial.println(Dystans);
     Serial.println(predkosc);
   }
-
 }
+
 void enkL_A_ISR(void){
   bool A = digitalRead(enkL_A_pin);
   bool B = digitalRead(enkL_B_pin);
