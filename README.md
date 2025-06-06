@@ -87,9 +87,9 @@ https://micro.ros.org/docs/tutorials/core/first_application_linux/
 https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/  
 https://www.youtube.com/watch?v=fo5I9ZYbG5Q&list=PL1YH3iMfizDJge1nDCuEMvCvhBkKinIJ-  
 https://www.youtube.com/watch?v=4JVdT523gfw&list=PL1YH3iMfizDLgcrTL1rj4NxXYKnPLLkby  
-3. przekazać dane z arduino na odpowiedni topic (jakies odom czy cos w tym stylu)
-4. złożyć wszystko do kupy i stworzyć mape
-5. stworzyć skrypt w bashu do odpalania całości
+2. przekazać dane z arduino na odpowiedni topic (jakies odom czy cos w tym stylu)  
+3. złożyć wszystko do kupy i stworzyć mape  
+4. stworzyć skrypt w bashu do odpalania całości  
 
 ## LiDAR
 
