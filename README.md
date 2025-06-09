@@ -43,15 +43,19 @@ https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a
    ros2 run micro_ros_setup build_agent.sh
    source install/local_setup.bash
    ```
-10. Wlaczenie agenta
+10. Wlaczenie agenta (po USB)
     ```bash
     ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
     ```
-11. W nowym terminalu przelacz sie na roota
+    Wlaczenie agenta (po WIFI)
+    ```bash
+    ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -l 192.168.1.249
+    ```
+12. W nowym terminalu przelacz sie na roota
     ```bash
     sudo su
     ```
-12. Konfiguracja srodowiska
+13. Konfiguracja srodowiska
     ```bash
     source /opt/ros/<twoja_dystrybucja_ros2>/setup.bash
     ```
