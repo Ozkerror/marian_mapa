@@ -1,84 +1,51 @@
 # marian_mapa
-Uzytkownicy zarowno w Dockerze jak i poza nim musza byc tacy sami aby mozliwa byla komunikacja.  
-W przyszlosci jesli uda sie stworzyc wlasnego Dockera to warto zainteresowac sie docker compose.  
+Korzystanie z ROS2 do stworzenia mapy przy użyciu LiDARa i ESP32 z microRosa na komputerze bez użycia Docker'a
+## Wymagania
+--Zainstalowany ROS2 Humble na Ubuntu 22.04
+--Stworzony workspace ROS2
+--zainstalowany microRos
 
 ## Przydatny chat  
 https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a  
 
 ## Micro_ROS  
-1. Docker - uruchomienie kontenera
+1. Wejście do folderu workspace'u
    ```bash
-   docker run -it --net=host -v /dev:/dev --privileged ros:humble
+   cd microros_ws/
    ```
-3. Konfiguracja srodowiska
+2. Konfiguracja środowiska i uruchomienie agenta
    ```bash
-   source /opt/ros/$ROS_DISTRO/setup.bash
-   ```
-3. Tworzenie Workspace'u i pobieranie narzedzi microRosa
-   ```bash
-   mkdir microros_ws
-   cd microros_ws
-   git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
-   ```
-4. instalacja zaleznosci
-   ```bash
-   sudo apt update && rosdep update
-   rosdep install --from-paths src --ignore-src -y
-   ```
-5. instalacja pipa
-   ```bash
-   sudo apt-get install python3-pip
-   ```
-7. buildowanie narzedzi microRosa
-   ```bash
-   colcon build
    source install/local_setup.bash
    ```
-8. instalacja agenta microRosa
+3. Uruchomienie agenta microRosa poprzez WIFI
    ```bash
-   ros2 run micro_ros_setup create_agent_ws.sh
+   ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -l 192.168.1.249
    ```
-9. Buildowanie agenta
+4. W nowym terminalu przelacz sprawdzamy czy pojawił się nowy topic
    ```bash
-   ros2 run micro_ros_setup build_agent.sh
-   source install/local_setup.bash
+   ros2 topic list
    ```
-10. Wlaczenie agenta (po USB)
-    ```bash
-    ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
-    ```
-    Wlaczenie agenta (po WIFI)
-    ```bash
-    ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -l 192.168.1.249
-    ```
-12. W nowym terminalu przelacz sie na roota
-    ```bash
-    sudo su
-    ```
-13. Konfiguracja srodowiska
-    ```bash
-    source /opt/ros/<twoja_dystrybucja_ros2>/setup.bash
-    ```
-    
-    
+5. Jeśli chcemy wysłać wiadmość do ESP32, to w nowym terminalu możemy użyć poniższego polecenia:
+   ```bash
+   ros2 topic pub --once /test_topic std_msgs/msg/Int32 {'data: 1'} 
+   ```
+   Lub data:0 (1 zapala LED, 0 gasi)
+6. Aby sprawdzić, czy ESP32 odbiera wiadomości, możemy użyć:
+   ```bash
+   ros2 topic echo /test_topic
+   ```
 
   
 ## Do zrobienia
 1. Ogarnąć podstawy microRosa
-
-LINK BOZY
-https://cps.unileoben.ac.at/install-micro-ros-on-esp32/  https://cps.unileoben.ac.at/install-micro-ros-on-esp32/
-
-
-
-https://micro.ros.org/blog/2020/08/27/esp32/  
-https://micro.ros.org/docs/tutorials/core/first_application_linux/  
-https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/  
-https://www.youtube.com/watch?v=fo5I9ZYbG5Q&list=PL1YH3iMfizDJge1nDCuEMvCvhBkKinIJ-  
-https://www.youtube.com/watch?v=4JVdT523gfw&list=PL1YH3iMfizDLgcrTL1rj4NxXYKnPLLkby  
 2. przekazać dane z arduino na odpowiedni topic (jakies odom czy cos w tym stylu)  
+https://wiki.ros.org/hokuyo_node/Tutorials/UsingTheHokuyoNode
+https://www.youtube.com/watch?v=tKfVU1n5TjA&t=182s
 3. złożyć wszystko do kupy i stworzyć mape  
 4. stworzyć skrypt w bashu do odpalania całości  
+
+KTO WIE TEN WIE:
+https://www.facebook.com/photo.php?fbid=986893943477119&id=100064695668738&set=a.342504681249385
 
 ## LiDAR
 
