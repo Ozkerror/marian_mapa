@@ -59,7 +59,7 @@ https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a
     ```bash
     ros2 topic list
     ```
-14. Sprawdzanie co jest wysylane na topic
+14. Sprawdzanie co jest wysylane na topic (jesli chcesz zatrzymac to ctrl+c)
     ```bash
     ros2 topic echo /odom
     ```
