@@ -2,8 +2,17 @@
 Korzystanie z ROS2 do stworzenia mapy przy użyciu LiDARa i ESP32 z microRosa na komputerze bez użycia Docker'a
 ## Wymagania
 --Zainstalowany ROS2 Humble na Ubuntu 22.04
+
 --Stworzony workspace ROS2
+
 --zainstalowany microRos
+## Instalacja ROS2 (dla wersji Linux 22.04)
+
+Podążaj zgodnie z instrukcją z filmu:  
+https://www.youtube.com/watch?v=-VGJy1QGDlA
+
+oraz poradnikiem na stronie:  
+https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
 
 ## Przydatny chat  
 https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a  
@@ -19,7 +28,14 @@ https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a
    ```
 3. Uruchomienie agenta microRosa poprzez WIFI
    ```bash
-   ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -l 192.168.1.249
+   ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888 -l 192.168.1.249 -v6
+   ```
+   A jeśli chcemy poprzez USB<br>*Tutaj sprawdzamy listę podłączonych urządzeń*  
+   ```bash
+   ls /dev/tty*
+   ```
+   ```bash
+   ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
    ```
 4. W nowym terminalu przelacz sprawdzamy czy pojawił się nowy topic
    ```bash
@@ -39,9 +55,7 @@ https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a
 ## Do zrobienia
 1. Ogarnąć podstawy microRosa
 2. przekazać dane z arduino na odpowiedni topic (jakies odom czy cos w tym stylu)  
-https://wiki.ros.org/hokuyo_node/Tutorials/UsingTheHokuyoNode
-https://www.youtube.com/watch?v=tKfVU1n5TjA&t=182s
-3. złożyć wszystko do kupy i stworzyć mape  
+3. złożyć wszystko w całość i stworzyć mape  
 4. stworzyć skrypt w bashu do odpalania całości  
 
 KTO WIE TEN WIE:
@@ -67,9 +81,9 @@ https://www.facebook.com/photo.php?fbid=986893943477119&id=100064695668738&set=a
    W Bashu powinien wyświetlić się port, do którego podłączony jest LiDAR (np. `/dev/ttyACM0`).
 
 2. Wklej poniższą linijkę z nazwą portu do którego jest podłączony LiDAR:
-
+   Wcześniej należy wejść do folderu z tym plikiem config.yaml
    ```bash
-   yq -i '.urg_node.ros__parameters.serial_port = "/dev/ttyACM[tutaj]"' config.yaml
+   yq -i '.urg_node.ros__parameters.serial_port = "/dev/ttyACM0"' config.yaml
    ```
 
 3. Odpalanie gałęzi dla lidaru:
@@ -95,10 +109,8 @@ https://www.facebook.com/photo.php?fbid=986893943477119&id=100064695668738&set=a
 2. Ustaw `Fixed Frame`: `laser`
 3. Kliknij `Add` w lewym dolnym rogu, następnie `By Topic`, potem `LaserScan`, a na końcu `OK`
 
-### Instalacja ROS2 (dla wersji Linux 22.04)
-
-Podążaj zgodnie z instrukcją z filmu:  
-https://www.youtube.com/watch?v=-VGJy1QGDlA
-
-oraz poradnikiem na stronie:  
-https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
+# Tworzenie mapy
+### Przydatne linki
+https://wiki.ros.org/hokuyo_node/Tutorials/UsingTheHokuyoNode
+https://www.youtube.com/watch?v=tKfVU1n5TjA&t=182s
+##
