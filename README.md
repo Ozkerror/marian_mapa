@@ -55,7 +55,15 @@ https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a
     ```bash
     source /opt/ros/humble/setup.bash
     ```
-    
+13. Sprawdzenie topicow
+    ```bash
+    ros2 topic list
+    ```
+14. Sprawdzanie co jest wysylane na topic
+    ```bash
+    ros2 topic echo /odom
+    ```
+      
     
 
   
