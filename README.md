@@ -48,8 +48,23 @@ https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a
    Lub data:0 (1 zapala LED, 0 gasi)
 6. Aby sprawdzić, czy ESP32 odbiera wiadomości, możemy użyć:
    ```bash
-   ros2 topic echo /test_topic
+   ros2 run micro_ros_setup build_agent.sh
+   source install/local_setup.bash
    ```
+10. Wlaczenie agenta
+    ```bash
+    ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
+    ```
+11. W nowym terminalu przelacz sie na roota
+    ```bash
+    sudo su
+    ```
+12. Konfiguracja srodowiska
+    ```bash
+    source /opt/ros/<twoja_dystrybucja_ros2>/setup.bash
+    ```
+    
+    
 
   
 ## Do zrobienia
@@ -83,6 +98,7 @@ https://www.facebook.com/photo.php?fbid=986893943477119&id=100064695668738&set=a
 2. Wklej poniższą linijkę z nazwą portu do którego jest podłączony LiDAR:
    Wcześniej należy wejść do folderu z tym plikiem config.yaml
    ```bash
+   source /opt/ros/humble/setup.bash
    yq -i '.urg_node.ros__parameters.serial_port = "/dev/ttyACM0"' config.yaml
    ```
 
@@ -92,9 +108,10 @@ https://www.facebook.com/photo.php?fbid=986893943477119&id=100064695668738&set=a
    ros2 run urg_node urg_node_driver --ros-args --params-file config.yaml
    ```
 
-4. Sprawdzenie, czy wszystko działa – wpisz w nowym terminalu:
+4. Sprawdzenie, czy wszystko działa – wpisz w nowym terminal:
 
    ```bash
+   source /opt/ros/humble/setup.bash
    ros2 topic echo /scan
    ```
 
