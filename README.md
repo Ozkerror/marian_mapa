@@ -106,6 +106,7 @@ https://www.youtube.com/watch?v=4JVdT523gfw&list=PL1YH3iMfizDLgcrTL1rj4NxXYKnPLL
 2. Wklej poniższą linijkę z nazwą portu do którego jest podłączony LiDAR:
 
    ```bash
+   source /opt/ros/humble/setup.bash
    yq -i '.urg_node.ros__parameters.serial_port = "/dev/ttyACM[tutaj]"' config.yaml
    ```
 
@@ -115,9 +116,10 @@ https://www.youtube.com/watch?v=4JVdT523gfw&list=PL1YH3iMfizDLgcrTL1rj4NxXYKnPLL
    ros2 run urg_node urg_node_driver --ros-args --params-file config.yaml
    ```
 
-4. Sprawdzenie, czy wszystko działa – wpisz w nowym terminalu:
+4. Sprawdzenie, czy wszystko działa – wpisz w nowym terminal:
 
    ```bash
+   source /opt/ros/humble/setup.bash
    ros2 topic echo /scan
    ```
 
