@@ -13,6 +13,10 @@
 #include <geometry_msgs/msg/vector3.h>
 #include <std_msgs/msg/header.h>
 
+#include <tf2_msgs/msg/tf_message.h>
+#include <geometry_msgs/msg/transform_stamped.h>
+
+
 // Definicje pinów enkoderów
 const uint8_t enkL_A_pin = 2;
 const uint8_t enkL_B_pin = 4;  // Zmieniono z 3 na 4, aby uniknąć konfliktu z Serial RX na ESP32
@@ -37,11 +41,14 @@ long int poprzednie_impulsy_R = 0;
 
 rcl_publisher_t odometry_publisher;
 nav_msgs__msg__Odometry odom_msg;
+
 rclc_executor_t executor;
 rcl_allocator_t allocator;
 rclc_support_t support;
 rcl_node_t node;
 rcl_timer_t timer;
+rcl_publisher_t tf_publisher;
+geometry_msgs__msg__TransformStamped odom_tf;
 
 const unsigned long timer_period_ms = 100;
 
@@ -123,12 +130,19 @@ void timer_callback(rcl_timer_t *timer, int64_t last_call_time) {
     double v_theta = (dt_sec > 0) ? (delta_theta / dt_sec) : 0.0;
 
     // --- POPRAWKA TUTAJ ---
-    rcl_time_point_value_t current_time_ns;
-    RCCHECK(rcl_clock_get_now(&support.clock, &current_time_ns)); // Przekazanie wskaźnika do current_time_ns
+    rcl_time_point_value_t now = 0;
+    rcl_clock_t clock;
+    rcl_clock_init(RCL_SYSTEM_TIME, &clock, &allocator);
+    unsigned long start = millis();
+    while (now < 1000000000 && millis() - start < 10000) { // max 10 sekund
+        rcl_clock_get_now(&clock, &now);
+        delay(100);
+    }
+    Serial.print("Pierwszy czas systemowy: ");
+    Serial.println(now);
+    odom_msg.header.stamp.sec = RCL_NS_TO_S(now);
+    odom_msg.header.stamp.nanosec = now % 1000000000;
     // --- KONIEC POPRAWKI ---
-
-    odom_msg.header.stamp.sec = RCL_NS_TO_S(current_time_ns);
-    odom_msg.header.stamp.nanosec = current_time_ns % RCL_S_TO_NS(1);
 
     odom_msg.pose.pose.position.x = x_pos;
     odom_msg.pose.pose.position.y = y_pos;
@@ -157,6 +171,22 @@ void timer_callback(rcl_timer_t *timer, int64_t last_call_time) {
     odom_msg.twist.twist.angular.z = v_theta;
 
     RCSOFTCHECK(rcl_publish(&odometry_publisher, &odom_msg, NULL));
+
+    // --- NOWA CZĘŚĆ DLA TF ---
+    odom_tf.header.stamp = odom_msg.header.stamp;
+    odom_tf.header.frame_id.data = odom_frame_buffer; // "odom"
+    odom_tf.child_frame_id.data = base_link_frame_buffer; // "base_link"
+    odom_tf.transform.translation.x = x_pos;
+    odom_tf.transform.translation.y = y_pos;
+    odom_tf.transform.translation.z = 0.0;
+    odom_tf.transform.rotation = odom_msg.pose.pose.orientation;
+
+    tf2_msgs__msg__TFMessage tf_msg;
+    tf_msg.transforms.size = 1;
+    tf_msg.transforms.data = &odom_tf; // odom_tf to Twój geometry_msgs__msg__TransformStamped
+
+    RCSOFTCHECK(rcl_publish(&tf_publisher, &tf_msg, NULL));
+    // --- KONIEC NOWEJ CZĘŚCI TF ---
   }
 }
 
@@ -166,7 +196,7 @@ void setup() {
   // --- POPRAWKA TUTAJ ---
   set_microros_transports(); // Użyj bardziej ogólnej funkcji
   // --- KONIEC POPRAWKI ---
-  // delay(2000); // Daj czas na połączenie agenta, jeśli potrzebne
+  delay(2000); // Daj czas na połączenie agenta, jeśli potrzebne
 
   pinMode(enkL_A_pin, INPUT_PULLUP);
   pinMode(enkL_B_pin, INPUT_PULLUP);
@@ -186,6 +216,12 @@ void setup() {
     &node,
     ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry),
     "odom"));
+
+  RCCHECK(rclc_publisher_init_default(
+    &tf_publisher,
+    &node,
+    ROSIDL_GET_MSG_TYPE_SUPPORT(tf2_msgs, msg, TFMessage),
+    "/tf"));
 
   strcpy(odom_frame_buffer, "odom");
   odom_msg.header.frame_id.data = odom_frame_buffer;
@@ -217,4 +253,6 @@ void setup() {
 void loop() {
   RCSOFTCHECK(rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10)));
   delay(10); // Zmniejszone opóźnienie, aby częściej kręcić egzekutorem, jeśli timer_period_ms jest mały
+  Serial.print("micro-ROS now: ");
+  Serial.println(odom_msg.header.stamp.sec);
 }
