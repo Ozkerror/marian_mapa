@@ -6,65 +6,21 @@ W przyszlosci jesli uda sie stworzyc wlasnego Dockera to warto zainteresowac sie
 https://github.com/copilot/share/c04e510a-41e4-8c36-8011-5e4520d5412a  
 
 ## Micro_ROS  
-1. Docker - uruchomienie kontenera
+1. Podlacz ESP32 z wgranym programem do komputera
+2. Sprawdz do ktorego portu jest podlaczone
    ```bash
-   docker run -it --net=host -v /dev:/dev --privileged ros:humble
+   ls /dev/ttyUSB*
    ```
-3. Konfiguracja srodowiska
+3. odpal dockera z microRosem
    ```bash
-   source /opt/ros/$ROS_DISTRO/setup.bash
+   docker run -it --rm --net=host --device=/dev/ttyUSB0 microros/micro-ros-agent:humble serial --dev /dev/ttyUSB0
    ```
-3. Tworzenie Workspace'u i pobieranie narzedzi microRosa
+   Jesli przy sprawdzaniu portu w pkt. 2 wyskoczyl inny port niz ttyUSB0, nalezy to zmienic w dwoch miejscach w powyzszej komendzie
+4. W NOWYM TERMINALU mozna sprawdzic czy wszystko sie ladnie wysyla
    ```bash
-   mkdir microros_ws
-   cd microros_ws
-   git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
+   source /opt/ros/humble/setup.bash
+   ros2 topic echo /odom
    ```
-4. instalacja zaleznosci
-   ```bash
-   sudo apt update && rosdep update
-   rosdep install --from-paths src --ignore-src -y
-   ```
-5. instalacja pipa
-   ```bash
-   sudo apt-get install python3-pip
-   ```
-7. buildowanie narzedzi microRosa
-   ```bash
-   colcon build
-   source install/local_setup.bash
-   ```
-8. instalacja agenta microRosa
-   ```bash
-   ros2 run micro_ros_setup create_agent_ws.sh
-   ```
-9. Buildowanie agenta
-   ```bash
-   ros2 run micro_ros_setup build_agent.sh
-   source install/local_setup.bash
-   ```
-10. Wlaczenie agenta
-    ```bash
-    ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0
-    ```
-11. W nowym terminalu przelacz sie na roota
-    ```bash
-    sudo su
-    ```
-12. Konfiguracja srodowiska
-    ```bash
-    source /opt/ros/humble/setup.bash
-    ```
-13. Sprawdzenie topicow
-    ```bash
-    ros2 topic list
-    ```
-14. Sprawdzanie co jest wysylane na topic (jesli chcesz zatrzymac to ctrl+c)
-    ```bash
-    ros2 topic echo /odom
-    ```
-      
-    
 
   
 ## Do zrobienia
