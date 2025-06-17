@@ -14,8 +14,8 @@
 #include <std_msgs/msg/header.h>
 
 // Definicje pinów enkoderów
-const uint8_t enkL_A_pin = 2;
-const uint8_t enkL_B_pin = 4;  // Zmieniono z 3 na 4, aby uniknąć konfliktu z Serial RX na ESP32
+const uint8_t enkL_A_pin = 16;
+const uint8_t enkL_B_pin = 17;  // Zmieniono z 3 na 4, aby uniknąć konfliktu z Serial RX na ESP32
 const uint8_t enkP_A_pin = 18;
 const uint8_t enkP_B_pin = 19;
 
