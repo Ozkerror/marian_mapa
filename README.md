@@ -13,7 +13,9 @@ ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 1 base_link laser
 ZORIENTUJ SIE O CO CHODZI Z USE_SIM_TIME, BYC MOZE BRAK SYNCHRONIZACJI CZASOWEJ MIEDZY POSZCZEGOLNYMI NODEAMI JEST PROBLEMEM!!!!  
 STWORZ LAUNCH FILE!!!
   
-  
+
+
+-------------------------------------------------------------------------------------------
 Uzytkownicy zarowno w Dockerze jak i poza nim musza byc tacy sami aby mozliwa byla komunikacja.  
 W przyszlosci jesli uda sie stworzyc wlasnego Dockera to warto zainteresowac sie docker compose.  
 
